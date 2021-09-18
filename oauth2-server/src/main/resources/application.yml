@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: oauth2-server
+
+server:
+  port: 19000
+
+logging:
+  level:
+    root: INFO
+    cn:
+      dev33:
+        satoken: debug
+    org:
+      springframework:
+        web:
+          servlet:
+            DispatcherServlet: DEBUG
+
+print-server-address:
+  ignore-parent-context: true
+
+info:
+  app: ${spring.application.name}
