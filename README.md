@@ -15,5 +15,7 @@
 127.0.0.1 oauth-client.com
 ```
 
-1. 访问 [/oauth2/authorize](http://oauth-server.com:19000/oauth2/authorize?response_type=code&client_id=10001&redirect_uri=http://sa-token.dev33.cn/&scope=userinfo) 进行登录授权
-2. 访问 [/oauth2/token](http://oauth-server.com:19000/oauth2/token?grant_type=authorization_code&client_id=10001&client_secret=aaaa-bbbb-cccc-dddd-eeee&code={code}) 获取access_token等信息
+1. 访问 [/oauth2/authorize](http://oauth-server.com:19000/oauth2/authorize?response_type=code&client_id=10001&redirect_uri=http://sa-token.dev33.cn/&scope=userinfo) 进行登录授权  
+检测用户在oauth2 server上的登录状态，登录后，再进行oauth2授权流程
+2. 访问 [/oauth2/token](http://oauth-server.com:19000/oauth2/token?grant_type=authorization_code&client_id=10001&client_secret=aaaa-bbbb-cccc-dddd-eeee&code={code}) 获取access_token等信息  
+替换掉其中的code授权码参数

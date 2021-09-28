@@ -9,6 +9,7 @@ logging:
   level:
     root: INFO
     cn:
+      netbuffer: debug
       dev33:
         satoken: debug
     org:
