@@ -17,6 +17,7 @@
 
     <modules>
         <module>oauth2-server</module>
+        <module>oauth2-client-1</module>
     </modules>
 
     <name>oauth-protocol-demo</name>

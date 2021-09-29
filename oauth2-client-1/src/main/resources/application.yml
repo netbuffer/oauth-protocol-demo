@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: oauth2-client-1
+
+server:
+  port: 19001
+
+oauth2:
+  client:
+    clientId: 10001
+    clientSecret: aaaa-bbbb-cccc-dddd-eeee
+    serverUrl: http://oauth-server.com:19000
+
+logging:
+  level:
+    root: INFO
+    cn:
+      netbuffer: debug
+      dev33:
+        satoken: debug
+    org:
+      springframework:
+        web:
+          servlet:
+            DispatcherServlet: DEBUG
+
+print-server-address:
+  ignore-parent-context: true
+
+info:
+  app: ${spring.application.name}
+  client:
+    url: http://oauth-client.com:${server.port}
