@@ -2,9 +2,9 @@ package cn.netbuffer.oauth2.demo.client1.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.ejlchina.okhttps.OkHttps;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
+import com.dtflys.forest.Forest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
@@ -55,14 +55,12 @@ public class SaOAuthClientController {
     @RequestMapping("/codeLogin")
     public SaResult codeLogin(String code) {
         // 调用Server端接口，获取 Access-Token 以及其他信息
-        String str = OkHttps.sync(serverUrl + "/oauth2/token")
-                .addBodyPara("grant_type", "authorization_code")
-                .addBodyPara("code", code)
-                .addBodyPara("client_id", clientId)
-                .addBodyPara("client_secret", clientSecret)
-                .post()
-                .getBody()
-                .toString();
+        String str = Forest.post(serverUrl + "/oauth2/token")
+                .addBody("grant_type", "authorization_code")
+                .addBody("code", code)
+                .addBody("client_id", clientId)
+                .addBody("client_secret", clientSecret)
+                .executeAsString();
         JSONObject data = JSON.parseObject(str);
         log.debug("/oauth2/token return {}", data);
 
@@ -84,14 +82,12 @@ public class SaOAuthClientController {
     @RequestMapping("/refresh")
     public SaResult refresh(String refreshToken) {
         // 调用Server端接口，通过 Refresh-Token 刷新出一个新的 Access-Token
-        String str = OkHttps.sync(serverUrl + "/oauth2/refresh")
-                .addBodyPara("grant_type", "refresh_token")
-                .addBodyPara("client_id", clientId)
-                .addBodyPara("client_secret", clientSecret)
-                .addBodyPara("refresh_token", refreshToken)
-                .post()
-                .getBody()
-                .toString();
+        String str = Forest.post(serverUrl + "/oauth2/refresh")
+                .addBody("grant_type", "refresh_token")
+                .addBody("client_id", clientId)
+                .addBody("client_secret", clientSecret)
+                .addBody("refresh_token", refreshToken)
+                .executeAsString();
         JSONObject data = JSON.parseObject(str);
         return SaResult.data(data);
     }
@@ -100,14 +96,13 @@ public class SaOAuthClientController {
     @RequestMapping("/passwordLogin")
     public SaResult passwordLogin(String username, String password) {
         // 模式三：密码式-授权登录
-        String str = OkHttps.sync(serverUrl + "/oauth2/token")
-                .addBodyPara("grant_type", "password")
-                .addBodyPara("client_id", clientId)
-                .addBodyPara("username", username)
-                .addBodyPara("password", password)
-                .post()
-                .getBody()
-                .toString();
+        String str = Forest.post(serverUrl + "/oauth2/token")
+                .addBody("grant_type", "password")
+                .addBody("client_id", clientId)
+                .addBody("client_secret", clientSecret)
+                .addBody("username", username)
+                .addBody("password", password)
+                .executeAsString();
         JSONObject data = JSON.parseObject(str);
         long uid = getUserIdByOpenid(data.getString("openid"));
         // 返回相关参数
@@ -119,13 +114,11 @@ public class SaOAuthClientController {
     @RequestMapping("/clientToken")
     public SaResult clientToken() {
         // 调用Server端接口
-        String str = OkHttps.sync(serverUrl + "/oauth2/client_token")
-                .addBodyPara("grant_type", "client_credentials")
-                .addBodyPara("client_id", clientId)
-                .addBodyPara("client_secret", clientSecret)
-                .post()
-                .getBody()
-                .toString();
+        String str = Forest.post(serverUrl + "/oauth2/client_token")
+                .addBody("grant_type", "client_credentials")
+                .addBody("client_id", clientId)
+                .addBody("client_secret", clientSecret)
+                .executeAsString();
         JSONObject data = JSON.parseObject(str);
         return SaResult.data(data);
     }
@@ -141,11 +134,9 @@ public class SaOAuthClientController {
     @RequestMapping("/getUserinfo")
     public SaResult getUserinfo(String accessToken) {
         // 调用Server端接口，查询开放的资源
-        String str = OkHttps.sync(serverUrl + "/oauth2/userinfo")
-                .addBodyPara("access_token", accessToken)
-                .post()
-                .getBody()
-                .toString();
+        String str = Forest.post(serverUrl + "/oauth2/userinfo")
+                .addBody("access_token", accessToken)
+                .executeAsString();
         JSONObject data = JSON.parseObject(str);
         return SaResult.data(data);
     }

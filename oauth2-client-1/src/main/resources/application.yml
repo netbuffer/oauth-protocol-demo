@@ -8,7 +8,7 @@ server:
 oauth2:
   client:
     clientId: 10001
-    clientSecret: aaaa-bbbb-cccc-dddd-eeee
+    clientSecret: lzNjiJInCcWVSIQGHbX83uL5C7HSXaHX
     serverUrl: http://oauth-server.com:19000
 
 logging:
