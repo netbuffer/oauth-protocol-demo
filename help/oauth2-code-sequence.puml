@@ -1,0 +1,19 @@
+@startuml
+title OAuth2.0 授权码流程
+
+actor 用户 as User
+participant "第三方应用" as ThirdParty
+participant "Oauth2认证中心" as AuthCenter
+participant "资源中心" as ResourceCenter
+
+User -> ThirdParty: 1. 点击"第三方登录"
+ThirdParty -> AuthCenter: 2. 跳转到授权页面
+AuthCenter -> User: 3. 登录平台账号
+User -> AuthCenter: 4. 确认授权
+AuthCenter -> ThirdParty: 5. 返回 code
+ThirdParty -> AuthCenter: 6. 用 code + client_id + client_secret 换取 access_token
+AuthCenter -> ThirdParty: 7. 返回 access_token
+ThirdParty -> ResourceCenter: 8. 用 access_token 获取用户数据
+ResourceCenter -> ThirdParty: 9. 返回 openid
+ThirdParty -> User: 10. 生成会话 token，完成登录
+@enduml
